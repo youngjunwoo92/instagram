@@ -1,6 +1,8 @@
-import './globals.css';
-
 import { Open_Sans } from 'next/font/google';
+
+import Header from '@/components/Header';
+import './globals.css';
+import AuthContext from '@/context/AuthContext';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
@@ -15,8 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className={openSans.className}>
-      <body>{children}</body>
+    <html lang="en" className={openSans.className}>
+      <body>
+        <AuthContext>
+          <Header />
+          <main>{children}</main>
+        </AuthContext>
+      </body>
     </html>
   );
 }
