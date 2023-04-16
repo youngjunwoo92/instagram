@@ -12,6 +12,7 @@ import GradientButton from './ui/GradientButton';
 import SearchIcon from './ui/icons/SearchIcon';
 import UploadIcon from './ui/icons/UploadIcon';
 import HomeIcon from './ui/icons/HomeIcon';
+import Avatar from './ui/Avatar';
 
 const menus = [
   { href: '/', icon: <HomeIcon />, activeIcon: <HomeActiveIcon /> },
@@ -22,6 +23,9 @@ const menus = [
 export default function Header() {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const user = session?.user;
+
+  console.log({ user });
 
   return (
     <header className="sticky top-0 h-20 shadow-md">
@@ -40,10 +44,20 @@ export default function Header() {
                 </Link>
               </li>
             ))}
-            <GradientButton
-              text={session ? 'Sign Out' : 'Sign In'}
-              onClick={session ? signOut : signIn}
-            />
+            {user && (
+              <li>
+                <Link href={`/user/${user.username}`}>
+                  <Avatar image={user.image} />
+                </Link>
+              </li>
+            )}
+            <li>
+              <GradientButton
+                text={session ? 'Sign Out' : 'Sign In'}
+                onClick={session ? signOut : signIn}
+                size="md"
+              />
+            </li>
           </ul>
         </nav>
       </div>

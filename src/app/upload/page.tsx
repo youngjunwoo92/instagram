@@ -4,4 +4,4 @@ function UploadPage() {
   return <div>page</div>;
 }
 
-export default page;
+export default UploadPage;
