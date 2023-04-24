@@ -22,19 +22,21 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user: { id, email, name, image } }) {
-      if (!email) return false;
+      if (!email) {
+        return false;
+      }
 
       addUser({
         id,
-        email,
-        name: name ?? '',
+        name: name || '',
         image,
+        email,
         username: email.split('@')[0],
       });
+
       return true;
     },
     async session({ session }) {
-      console.log({ session });
       const user = session?.user;
       if (user) {
         session.user = {
@@ -49,6 +51,7 @@ export const authOptions: NextAuthOptions = {
     signIn: '/auth/signin',
     error: '/auth/error',
   },
+  secret: 'instagram-secret',
 };
 
 export default NextAuth(authOptions);

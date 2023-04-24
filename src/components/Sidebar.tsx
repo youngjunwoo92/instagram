@@ -44,17 +44,17 @@ export default function Sidebar({ user: { name, username, image } }: Props) {
   return (
     <div className="ml-auto p-2 flex flex-col">
       <div className="flex gap-2 items-center">
-        <Avatar image={image} width={40} height={40} />
+        <Avatar image={image} size="lg" />
         <div>
-          <p className="font-bold font-md">{username}</p>
-          <p className="">{name}</p>
+          <p className="font-bold text-lg">{username}</p>
+          <p className="text-lg text-neutral-500 leading-4">{name}</p>
         </div>
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap mt-4 text-neutral-500 text-sm">
         {links.map((link, index) => (
           <div key={link.path}>
             {link.label}
-            {index < links.length - 1 && <span> | </span>}
+            {index < links.length - 1 && <span className="mx-1">|</span>}
           </div>
         ))}
       </div>
