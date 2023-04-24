@@ -16,7 +16,9 @@ export default function Avatar({
       <img
         alt="avatar"
         src={image ?? undefined}
-        className={`rounded-full ${highlight ? 'p-[2px] bg-[#fff]' : ''}`}
+        className={`rounded-full object-cover w-full h-full ${
+          highlight ? 'p-[2px] bg-[#fff]' : ''
+        }`}
       />
     </div>
   );
@@ -25,7 +27,7 @@ export default function Avatar({
 function getContainerStyle(size: string, highlight: boolean): string {
   const base = `rounded-full flex justify-center items-center`;
   const highlightStyle = highlight
-    ? `bg-gradient-to-bl from-fuchsia-600 via-rose-500 to-amber-300 p-[2px]`
+    ? `bg-gradient-to-bl from-fuchsia-600 via-rose-500 to-amber-300 p-[3px]`
     : '';
   const sizeStyle = (function () {
     switch (size) {

@@ -1,8 +1,10 @@
 import { Open_Sans } from 'next/font/google';
 
-import Header from '@/components/Header';
-import './globals.css';
+import SWRConfigContext from '@/context/SWRConfigContext';
 import AuthContext from '@/context/AuthContext';
+import Header from '@/components/Header';
+
+import './globals.css';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
@@ -21,7 +23,9 @@ export default function RootLayout({
       <body>
         <AuthContext>
           <Header />
-          <main>{children}</main>
+          <main>
+            <SWRConfigContext>{children}</SWRConfigContext>
+          </main>
         </AuthContext>
       </body>
     </html>
