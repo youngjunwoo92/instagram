@@ -25,8 +25,6 @@ export default function Header() {
   const { data: session } = useSession();
   const user = session?.user;
 
-  console.log({ user });
-
   return (
     <header className="sticky top-0 h-20 shadow-md">
       <div className="mx-auto p-2 flex justify-between max-w-lg w-full h-full items-center">

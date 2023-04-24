@@ -1,9 +1,23 @@
-import Header from '@/components/Header';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { redirect } from 'next/navigation';
+import FollowingBar from '@/components/FollowingBar';
+import PostList from '@/components/PostList';
+import Sidebar from '@/components/Sidebar';
 
-export default function Home() {
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+
+  if (!user) {
+    redirect('/auth/signin');
+  }
+
   return (
-    <>
-      <h1 className='text-red-500'>Instagram</h1>
-    </>
+    <section>
+      <FollowingBar />
+      <PostList />
+      <Sidebar user={user} />
+    </section>
   );
 }
