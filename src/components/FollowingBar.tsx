@@ -8,6 +8,7 @@ import Avatar from './ui/Avatar';
 import ScrollableBar from './ui/ScrollableBar';
 
 import { UserDetail } from '@/model/user';
+import FollowingFallback from './ui/FollowingFallback';
 
 export default function FollowingBar() {
   const { data, isLoading } = useSWR<UserDetail>('/api/me');
@@ -15,14 +16,14 @@ export default function FollowingBar() {
 
   if (isLoading) {
     return (
-      <div className="h-[80px] shadow-[0_3px_15px_3px_rgba(17,12,46,0.15)] p2 rounded-md flex justify-center items-center">
-        <Oval height={40} width={40} strokeWidth={5} />
+      <div className="h-[80px] border border-[rgb(219, 219, 219)] p-2 rounded-md flex items-center gap-4">
+        <FollowingFallback count={5} />
       </div>
     );
   }
 
   return (
-    <section className="p-2 shadow-[0_3px_15px_3px_rgba(17,12,46,0.15)] rounded-md">
+    <section className="p-2 border border-[rgb(219, 219, 219)] rounded-md">
       {users?.length ? (
         <ScrollableBar>
           {users.map((user) => (

@@ -27,7 +27,7 @@ export default function Header() {
 
   return (
     <header className="sticky bg-white top-0 h-20 shadow-md z-50">
-      <div className="mx-auto p-2 flex justify-between max-w-lg w-full h-full items-center">
+      <div className="mx-auto p-2 flex justify-between max-w-xl w-full h-full items-center">
         <div>
           <Link href="/">
             <h1 className="text-2xl font-bold">Instagram</h1>

@@ -1,5 +1,5 @@
-import { BsFillBookmarkFill } from 'react-icons/bs';
+import { FaBookmark } from 'react-icons/fa';
 
 export default function BookmarkActiveIcon() {
-  return <BsFillBookmarkFill className="w-7 h-7" />;
+  return <FaBookmark className="w-7 h-7" />;
 }

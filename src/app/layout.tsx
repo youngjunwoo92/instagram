@@ -4,6 +4,7 @@ import SWRConfigContext from '@/context/SWRConfigContext';
 import AuthContext from '@/context/AuthContext';
 import Header from '@/components/Header';
 
+import 'react-loading-skeleton/dist/skeleton.css';
 import './globals.css';
 
 const openSans = Open_Sans({ subsets: ['latin'] });

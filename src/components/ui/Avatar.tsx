@@ -1,8 +1,10 @@
+type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
+
 type Props = {
   image?: string;
   width?: Number;
   height?: Number;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: AvatarSize;
   highlight?: boolean;
 };
 
@@ -24,7 +26,7 @@ export default function Avatar({
   );
 }
 
-function getContainerStyle(size: string, highlight: boolean): string {
+function getContainerStyle(size: AvatarSize, highlight: boolean): string {
   const base = `rounded-full flex justify-center items-center`;
   const highlightStyle = highlight
     ? `bg-gradient-to-bl from-fuchsia-600 via-rose-500 to-amber-300 p-[3px]`
