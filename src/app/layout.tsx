@@ -21,13 +21,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={openSans.className}>
-      <body>
+      <body className="relative">
         <AuthContext>
           <Header />
           <main className="w-full  flex justify-center bg-neutral-50 min-h-full">
             <SWRConfigContext>{children}</SWRConfigContext>
           </main>
         </AuthContext>
+        <div id="portal" />
       </body>
     </html>
   );

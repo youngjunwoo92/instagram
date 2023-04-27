@@ -4,7 +4,11 @@ import React, { useCallback, useState } from 'react';
 import IconButton from './IconButton';
 import EmojiIcon from './ui/icons/EmojiIcon';
 
-export default function CommentForm() {
+type Props = {
+  border?: boolean;
+};
+
+export default function CommentForm({ border }: Props) {
   const [value, setValue] = useState<string>('');
 
   const handleChange = useCallback(
@@ -25,7 +29,9 @@ export default function CommentForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-3 flex items-center justify-between"
+      className={`p-3 flex items-center justify-between ${
+        border ? 'border-t border-[rgb(219, 219, 219)]' : ''
+      }`}
     >
       <div className="w-full flex items-center gap-2">
         <IconButton>

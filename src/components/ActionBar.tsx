@@ -7,7 +7,7 @@ import { parseDate } from '@/util/parseDate';
 type Props = {
   likes: string[];
   username: string;
-  text: string;
+  text?: string;
   createdAt: string;
 };
 
@@ -29,7 +29,7 @@ export default function ActionBar({ likes, username, text, createdAt }: Props) {
           </IconButton>
         </div>
       </div>
-      <div className="p-3 border-b border-[rgb(219, 219, 219)]">
+      <div className="p-3">
         {likes?.length && (
           <p className="mb-1 font-bold">
             {likes.length === 1 ? '1 like' : `${likes.length} likes`}
