@@ -1,32 +1,29 @@
 import CloseIcon from './ui/icons/CloseIcon';
 import ModalPortal from './ModalPortal';
-import IconButton from './IconButton';
-
-import { SimplePost } from '@/model/post';
-import PostDetail from './PostDetail';
 
 type Props = {
-  post: SimplePost;
+  children: React.ReactNode;
   onClose: () => void;
 };
 
-export default function PostModal({ onClose, post }: Props) {
+export default function PostModal({ onClose, children }: Props) {
   return (
     <ModalPortal>
       <section
-        className="fixed inset-0 bg-[rgba(0,0,0,0.54)] z-10"
+        className="fixed top-0 left-0 flex flex-col justify-center items-center w-full h-full z-50 bg-neutral-900/70"
         onClick={(e) => {
           if (e.target === e.currentTarget) {
             onClose();
           }
         }}
       >
-        <PostDetail post={post} />
-        <div className="absolute right-0 top-0 transform -translate-x-3/4 translate-y-3/4">
-          <IconButton onClick={onClose}>
-            <CloseIcon color="#fff" />
-          </IconButton>
-        </div>
+        <button
+          className="fixed top-0 right-0 p-8 text-white"
+          onClick={() => onClose()}
+        >
+          <CloseIcon />
+        </button>
+        <div className="bg-white w-4/5 h-3/5 max-w-7xl">{children}</div>
       </section>
     </ModalPortal>
   );

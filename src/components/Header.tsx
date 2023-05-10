@@ -26,7 +26,7 @@ export default function Header() {
   const user = session?.user;
 
   return (
-    <header className="sticky bg-white top-0 h-20 shadow-md z-1">
+    <header className="sticky bg-white top-0 h-20 shadow-md z-10">
       <div className="mx-auto p-2 flex justify-between max-w-xl w-full h-full items-center">
         <div>
           <Link href="/">

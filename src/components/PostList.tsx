@@ -8,11 +8,12 @@ import Post from './Post';
 import { SimplePost } from '@/model/post';
 import ModalPortal from './ModalPortal';
 import PostModal from './PostModal';
+import PostDetail from './PostDetail';
 
 export default function PostList() {
   const { data: posts, isLoading } = useSWR<SimplePost[]>('/api/posts');
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  console.log({ posts });
+
   const selected = selectedId
     ? (posts ?? []).find((post) => post.id === selectedId)
     : null;
@@ -43,7 +44,9 @@ export default function PostList() {
       </div>
       {selected && (
         <ModalPortal>
-          <PostModal onClose={handleClose} post={selected} />
+          <PostModal onClose={handleClose}>
+            <PostDetail post={selected} />
+          </PostModal>
         </ModalPortal>
       )}
     </section>
