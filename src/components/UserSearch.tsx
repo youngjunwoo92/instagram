@@ -3,16 +3,18 @@ import { useCallback, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
 import useSWR from 'swr';
 
-import { UserSearchResult } from '@/model/user';
-import useDebounce from '@/hooks/useDebounce';
+import { SearchUser } from '@/model/user';
 import CloseIcon from './ui/icons/CloseIcon';
+import UserListItem from './UserListItem';
+
+import useDebounce from '@/hooks/useDebounce';
 
 export default function UserSearch() {
   const [keyword, setKeyword] = useState('');
 
-  const debouncedKeyword = useDebounce(keyword, 300);
+  const debouncedKeyword = useDebounce(keyword, 500);
 
-  const { data: users, isLoading } = useSWR<UserSearchResult[]>(
+  const { data: users, isLoading } = useSWR<SearchUser[]>(
     debouncedKeyword.length > 1 ? `/api/search/${debouncedKeyword}` : null,
   );
 
@@ -26,8 +28,8 @@ export default function UserSearch() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
-      <form className="relative w-full">
+    <>
+      <div className="relative w-full">
         <input
           autoFocus
           value={keyword}
@@ -49,20 +51,20 @@ export default function UserSearch() {
             <CloseIcon color="#fff" size="sm" />
           </button>
         )}
-      </form>
+      </div>
       {users ? (
         users.length ? (
-          <ul className="grow">
+          <div className="flex flex-col gap-4">
             {users.map((user) => (
-              <li key={user.username}></li>
+              <UserListItem key={user.username} user={user} />
             ))}
-          </ul>
+          </div>
         ) : (
-          <div className="flex grow">
+          <div className="flex">
             <p className="mx-auto text-gray-500">No results found</p>
           </div>
         )
       ) : null}
-    </div>
+    </>
   );
 }

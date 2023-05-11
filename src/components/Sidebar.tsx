@@ -1,5 +1,5 @@
 import Avatar from './ui/Avatar';
-import { User } from '@/model/user';
+import { AuthUser } from '@/model/user';
 
 const links = [
   {
@@ -37,7 +37,7 @@ const links = [
 ];
 
 type Props = {
-  user: User;
+  user: AuthUser;
 };
 
 export default function Sidebar({ user: { name, username, image } }: Props) {

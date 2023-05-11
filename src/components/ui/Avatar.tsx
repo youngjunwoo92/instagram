@@ -1,4 +1,4 @@
-type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
+export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 type Props = {
   image?: string;
@@ -41,6 +41,8 @@ function getContainerStyle(size: AvatarSize, highlight: boolean): string {
         return 'w-[48px] h-[48px]';
       case 'xl':
         return 'w-[64px] h-[64px]';
+      case '2xl':
+        return 'w-24 h-24 md:w-36 md:h-36';
       default:
         return 'w-[32px] h-[32px]';
     }

@@ -7,11 +7,11 @@ import Avatar from './ui/Avatar';
 
 import ScrollableBar from './ui/ScrollableBar';
 
-import { UserDetail } from '@/model/user';
+import { HomeUser } from '@/model/user';
 import FollowingFallback from './ui/FollowingFallback';
 
 export default function FollowingBar() {
-  const { data, isLoading } = useSWR<UserDetail>('/api/me');
+  const { data, isLoading } = useSWR<HomeUser>('/api/me');
   const users = data?.following;
 
   if (isLoading) {
