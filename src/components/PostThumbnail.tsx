@@ -8,10 +8,12 @@ import { SimplePost } from '@/model/post';
 type Props = {
   post: SimplePost;
   onClick: (id: string) => void;
+  priority?: boolean;
 };
 
 export default function PostThumbnail({
   post: { id, image, likes, comments },
+  priority,
   onClick,
 }: Props) {
   return (
@@ -20,6 +22,7 @@ export default function PostThumbnail({
       onClick={() => onClick(id)}
     >
       <Image
+        priority={priority}
         className="w-full h-full object-cover"
         src={image}
         alt="thumbnail"

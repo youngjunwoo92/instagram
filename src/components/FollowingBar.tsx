@@ -1,14 +1,12 @@
 'use client';
-import { Oval } from 'react-loader-spinner';
 import Link from 'next/link';
 import useSWR from 'swr';
 
+import FollowingFallback from './ui/FollowingFallback';
+import ScrollableBar from './ui/ScrollableBar';
 import Avatar from './ui/Avatar';
 
-import ScrollableBar from './ui/ScrollableBar';
-
 import { HomeUser } from '@/model/user';
-import FollowingFallback from './ui/FollowingFallback';
 
 export default function FollowingBar() {
   const { data, isLoading } = useSWR<HomeUser>('/api/me');
@@ -40,7 +38,7 @@ export default function FollowingBar() {
       ) : (
         <div className="w-full flex justify-center items-center">
           <p className="h-[80px] leading-[80px] text-lg font-bold text-neutral-500">
-            You don't have following
+            You do not have following
           </p>
         </div>
       )}

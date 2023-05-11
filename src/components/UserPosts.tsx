@@ -10,23 +10,25 @@ import PostDetail from './PostDetail';
 import PostModal from './PostModal';
 import Tabs from './Tabs';
 
+import { ProfileUser } from '@/model/user';
 import { SimplePost } from '@/model/post';
+import { useSession } from 'next-auth/react';
 
 export type Tab = 'posts' | 'saved';
 
 type Props = {
   user: ProfileUser;
-  loggedInUser: AuthUser;
 };
 
-export default function UserPosts({
-  loggedInUser,
-  user: { username, email },
-}: Props) {
+export default function UserPosts({ user: { username } }: Props) {
   const [tab, setTab] = useState<Tab>('posts');
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const isMyProfile = loggedInUser.username === username;
+  const { data } = useSession();
+
+  const loggedInUser = data?.user;
+
+  const isMyProfile = loggedInUser?.username === username;
 
   const { data: posts, isLoading } = useSWR<SimplePost[]>(
     `/api/users/${username}/${tab}`,
@@ -53,16 +55,21 @@ export default function UserPosts({
       <Tabs tab={tab} onChange={handleChange} isMyProfile={isMyProfile} />
       {isLoading ? (
         <div className="grid grid-cols-3 gap-2">
-          {Array.from({ length: 12 }).map((item) => (
-            <div className="aspect-square">
+          {Array.from({ length: 12 }).map((item, index) => (
+            <div key={index} className="aspect-square">
               <Skeleton width="100%" height="100%" />
             </div>
           ))}
         </div>
       ) : posts?.length ? (
         <div className="grid grid-cols-3 gap-2">
-          {posts.map((post) => (
-            <PostThumbnail key={post.id} post={post} onClick={handleClick} />
+          {posts.map((post, index) => (
+            <PostThumbnail
+              key={post.id}
+              post={post}
+              onClick={handleClick}
+              priority={index < 6}
+            />
           ))}
         </div>
       ) : (

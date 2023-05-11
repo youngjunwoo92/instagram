@@ -1,5 +1,11 @@
+import { Metadata } from 'next';
+
 import UserSearch from '@/components/UserSearch';
-import React from 'react';
+
+export const metadata: Metadata = {
+  title: 'Search User',
+  description: 'Search users to follow',
+};
 
 export default function SearchPage() {
   return (
