@@ -1,5 +1,5 @@
 import GoogleProvider from 'next-auth/providers/google';
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 
 import { addUser } from '@/service/user';
 
@@ -36,8 +36,9 @@ export const authOptions: NextAuthOptions = {
 
       return true;
     },
-    async session({ session }) {
+    async session({ session }: { session: Session }) {
       const user = session?.user;
+
       if (user) {
         session.user = {
           ...user,

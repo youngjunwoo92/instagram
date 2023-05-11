@@ -19,7 +19,7 @@ export default function FollowButton({ user }: Props) {
 
   return showButton ? (
     <button
-      className={`flex items-center justify-center rounded-md px-4 py-2 font-bold ${
+      className={`flex text-sm items-center justify-center rounded-md px-4 py-2 font-bold ${
         isFollowing
           ? 'bg-neutral-200 hover:bg-neutral-300'
           : 'bg-[#0095f6] hover:bg-[#7FCAFA] text-white'
