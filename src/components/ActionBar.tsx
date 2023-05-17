@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 import BookmarkActiveIcon from './ui/icons/BookmarkActiveIcon';
@@ -30,11 +30,11 @@ export default function ActionBar({ post }: Props) {
 
   const { setLike } = usePosts();
 
-  const handleLike = useCallback((like: boolean) => {
+  const handleLike = (like: boolean) => {
     if (user) {
       setLike(post, user.username, like);
     }
-  }, []);
+  };
 
   return (
     <>

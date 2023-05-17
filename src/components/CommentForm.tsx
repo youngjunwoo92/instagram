@@ -21,7 +21,6 @@ export default function CommentForm({ border }: Props) {
   const handleSubmit = useCallback(
     (e: React.SyntheticEvent) => {
       e.preventDefault();
-      console.log({ value });
     },
     [value],
   );

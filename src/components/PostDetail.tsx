@@ -23,12 +23,12 @@ export default function PostDetail({ post }: Props) {
     <article className="flex flex-col md:flex-row w-full h-full">
       <div className="relative basis-3/5 flex items-center justify-center">
         <Image
+          fill
           priority
           src={image}
           alt="post"
-          fill
           sizes="650px"
-          className="object-cover"
+          className="object-contain bg-neutral-100"
         />
       </div>
       <div className="w-full basis-2/5 flex flex-col">

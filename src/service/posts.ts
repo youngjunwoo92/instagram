@@ -64,14 +64,6 @@ export async function getSavedPostsOf(username: string) {
     .then(mapPosts);
 }
 
-function mapPosts(posts: SimplePost[]) {
-  return posts.map((post: SimplePost) => ({
-    ...post,
-    likes: post.likes ?? [],
-    image: urlFor(post.image),
-  }));
-}
-
 export async function likePost(postId: string, userId: string) {
   return client
     .patch(postId) //
@@ -90,4 +82,12 @@ export async function dislikePost(postId: string, userId: string) {
     .patch(postId)
     .unset([`likes[_ref=="${userId}"]`])
     .commit();
+}
+
+function mapPosts(posts: SimplePost[]) {
+  return posts.map((post: SimplePost) => ({
+    ...post,
+    likes: post.likes ?? [],
+    image: urlFor(post.image),
+  }));
 }

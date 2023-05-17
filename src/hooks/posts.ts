@@ -1,5 +1,6 @@
-import { SimplePost } from '@/model/post';
 import useSWR from 'swr';
+
+import { SimplePost } from '@/model/post';
 
 async function updateLike(id: string, like: boolean) {
   return fetch('/api/likes', {
@@ -28,8 +29,6 @@ export default function usePosts() {
         : p,
     );
 
-    console.log({ post, newPosts });
-
     return mutate(updateLike(post.id, like), {
       optimisticData: newPosts,
       rollbackOnError: true,
@@ -37,5 +36,6 @@ export default function usePosts() {
       revalidate: false,
     });
   };
+
   return { posts, isLoading, error, setLike };
 }

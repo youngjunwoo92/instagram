@@ -48,7 +48,7 @@ export default function UserPosts({ user: { username } }: Props) {
 
   const handleClose = useCallback(() => {
     setSelectedId(null);
-  }, []);
+  }, [setSelectedId]);
 
   return (
     <>
