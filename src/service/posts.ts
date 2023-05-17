@@ -2,33 +2,27 @@ import { SimplePost } from '@/model/post';
 import { client, urlFor } from './sanity';
 
 const simplePostProjection = `
-...,
-"username": author -> username,
-"userImage": author-> image,
-"image": photo,
-"likes": likes[] -> username,
-"text": comments[0].comment,
-"comments": count(comments),
-"id": _id,
-"createdAt": _createdAt
+    ...,
+    "username": author->username,
+    "userImage": author->image,
+    "image": photo,
+    "likes": likes[]->username,
+    "text": comments[0].comment,
+    "comments": count(comments),
+    "id":_id,
+    "createdAt":_createdAt
 `;
 
 export async function getFollowingPostsOf(username: string) {
   return client
     .fetch(
-      `*[_type == "post" && author -> username == "${username}"
-      || author._ref in *[_type == "user" && username == "${username}"].following[]._ref] 
-      | order(_createdAt desc){
-        ${simplePostProjection}
-      }`,
+      `*[_type =="post" && author->username == "${username}"
+          || author._ref in *[_type == "user" && username == "${username}"].following[]._ref]
+          | order(_createdAt desc){
+          ${simplePostProjection}
+        }`,
     )
-    .then((posts) =>
-      posts.map((post: SimplePost) => ({
-        ...post,
-        likes: post.likes ?? [],
-        image: urlFor(post.image),
-      })),
-    );
+    .then(mapPosts);
 }
 
 export async function getPost(id: string) {
@@ -36,13 +30,13 @@ export async function getPost(id: string) {
     .fetch(
       `*[_type == "post" && _id == "${id}"][0]{
       ...,
-      "username": author -> username,
-      "userImage": author -> image,
+      "username": author->username,
+      "userImage": author->image,
       "image": photo,
-      "likes": likes[] -> username,
-      comments[]{comment, "username": author -> username, "image": author -> image, "createdAt": _createdAt},
-      "id": _id,
-      "createdAt": _createdAt
+      "likes": likes[]->username,
+      comments[]{comment, "username": author->username, "image": author->image},
+      "id":_id,
+      "createdAt":_creatdAt
     }`,
     )
     .then((post) => ({ ...post, image: urlFor(post.image) }));
@@ -51,37 +45,31 @@ export async function getPost(id: string) {
 export async function getPostsOf(username: string) {
   return client
     .fetch(
-      `*[_type == "post" && author -> username == "${username}"]
+      `*[_type == "post" && author->username == "${username}"]
       | order(_createdAt desc){
-      ${simplePostProjection}
+        ${simplePostProjection}
       }`,
     )
-    .then((posts) => {
-      console.log({ posts });
-      return posts.map((post: SimplePost) => ({
-        ...post,
-        likes: post.likes ?? [],
-        image: urlFor(post.image),
-      }));
-    });
+    .then(mapPosts);
 }
 
-export async function getSavedPostOf(username: string) {
+export async function getSavedPostsOf(username: string) {
   return client
     .fetch(
-      `*[_type == "post" && _id in *[_type == "user" && username == "${username}"].bookmarks[].ref]
+      `*[_type == "post" && _id in *[_type=="user" && username=="${username}"].bookmarks[]._ref]
       | order(_createdAt desc){
-      ${simplePostProjection}
+        ${simplePostProjection}
       }`,
     )
-    .then((posts) => {
-      console.log({ posts });
-      return posts.map((post: SimplePost) => ({
-        ...post,
-        likes: post.likes ?? [],
-        image: urlFor(post.image),
-      }));
-    });
+    .then(mapPosts);
+}
+
+function mapPosts(posts: SimplePost[]) {
+  return posts.map((post: SimplePost) => ({
+    ...post,
+    likes: post.likes ?? [],
+    image: urlFor(post.image),
+  }));
 }
 
 export async function likePost(postId: string, userId: string) {
@@ -99,7 +87,7 @@ export async function likePost(postId: string, userId: string) {
 
 export async function dislikePost(postId: string, userId: string) {
   return client
-    .patch(postId) //
+    .patch(postId)
     .unset([`likes[_ref=="${userId}"]`])
-    .commit({ autoGenerateArrayKeys: true });
+    .commit();
 }

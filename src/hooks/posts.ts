@@ -2,7 +2,7 @@ import { SimplePost } from '@/model/post';
 import useSWR from 'swr';
 
 async function updateLike(id: string, like: boolean) {
-  return fetch('api/likes', {
+  return fetch('/api/likes', {
     method: 'PUT',
     body: JSON.stringify({ id, like }),
   }).then((res) => res.json());
@@ -10,10 +10,10 @@ async function updateLike(id: string, like: boolean) {
 
 export default function usePosts() {
   const {
-    error,
-    mutate,
-    isLoading,
     data: posts,
+    isLoading,
+    mutate,
+    error,
   } = useSWR<SimplePost[]>('/api/posts');
 
   const setLike = (post: SimplePost, username: string, like: boolean) => {
@@ -28,6 +28,8 @@ export default function usePosts() {
         : p,
     );
 
+    console.log({ post, newPosts });
+
     return mutate(updateLike(post.id, like), {
       optimisticData: newPosts,
       rollbackOnError: true,
@@ -35,6 +37,5 @@ export default function usePosts() {
       revalidate: false,
     });
   };
-
   return { posts, isLoading, error, setLike };
 }

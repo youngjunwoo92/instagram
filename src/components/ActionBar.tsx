@@ -22,12 +22,13 @@ export default function ActionBar({ post }: Props) {
   const { likes, username, createdAt, text } = post;
 
   const { data: session } = useSession();
-  const { setLike } = usePosts();
-
   const user = session?.user;
+
   const liked = user ? likes.includes(user.username) : false;
 
   const [bookmarked, setBookmarked] = useState(false);
+
+  const { setLike } = usePosts();
 
   const handleLike = useCallback((like: boolean) => {
     if (user) {
