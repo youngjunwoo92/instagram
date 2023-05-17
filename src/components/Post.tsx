@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function Post({ post, onClick, priority = false }: Props) {
-  const { id, username, userImage, image, createdAt, likes, text } = post;
+  const { id, username, userImage, image } = post;
 
   return (
     <article className="flex flex-col border border-[rgb(219, 219, 219)] rounded-md">
@@ -27,12 +27,7 @@ export default function Post({ post, onClick, priority = false }: Props) {
         className="block aspect-square w-full h-auto object-contain bg-neutral-100 cursor-pointer"
         onClick={() => onClick(id)}
       />
-      <ActionBar
-        text={text}
-        likes={likes}
-        username={username}
-        createdAt={createdAt}
-      />
+      <ActionBar post={post} />
       <CommentForm border />
     </article>
   );

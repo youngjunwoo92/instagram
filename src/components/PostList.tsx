@@ -1,17 +1,16 @@
 'use client';
-import React, { useCallback, useState } from 'react';
-import useSWR from 'swr';
+import { useCallback, useState } from 'react';
 
 import PostFallback from './ui/PostFallback';
+import ModalPortal from './ModalPortal';
+import PostDetail from './PostDetail';
+import PostModal from './PostModal';
 import Post from './Post';
 
-import { SimplePost } from '@/model/post';
-import ModalPortal from './ModalPortal';
-import PostModal from './PostModal';
-import PostDetail from './PostDetail';
+import usePosts from '@/hooks/posts';
 
 export default function PostList() {
-  const { data: posts, isLoading } = useSWR<SimplePost[]>('/api/posts');
+  const { posts, isLoading } = usePosts();
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const selected = selectedId

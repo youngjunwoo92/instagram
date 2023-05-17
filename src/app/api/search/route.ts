@@ -4,7 +4,9 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { searchUsers } from '@/service/user';
 
-export async function GET(request: NextRequest) {
+export const dynamic = 'force-dynamic';
+
+export async function GET(_: NextRequest) {
   const session = await getServerSession(authOptions);
   const user = session?.user;
 

@@ -18,3 +18,12 @@ export async function GET(request: NextRequest, context: Context) {
 
   return getPost(context.params.id).then((data) => NextResponse.json(data));
 }
+
+export async function POST() {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+
+  if (!user) {
+    return new Response('Authentication Error', { status: 401 });
+  }
+}
