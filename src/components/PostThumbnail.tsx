@@ -9,13 +9,16 @@ type Props = {
   post: SimplePost;
   onClick: (id: string) => void;
   priority?: boolean;
+  isMyProfile: boolean;
 };
 
 export default function PostThumbnail({
   post: { id, image, likes, comments },
   priority,
   onClick,
+  isMyProfile,
 }: Props) {
+  console.log({ likes });
   return (
     <div
       className="relative aspect-square cursor-pointer"
@@ -33,7 +36,7 @@ export default function PostThumbnail({
         <div className="flex justify-around gap-4">
           <div className="flex gap-2 text-white">
             <HeartActiveIcon />
-            <p>{likes ?? 0}</p>
+            <p>{likes?.length === 0 ? null : likes.length}</p>
           </div>
           <div className="flex gap-2 text-white">
             <CommentActiveIcon />

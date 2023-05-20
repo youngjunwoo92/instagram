@@ -44,7 +44,11 @@ export default function CommentForm({ border }: Props) {
           className="resize-none w-full border-none outline-none overflow-auto scrollbar-hide px-2 text-sm placeholder-text-bold"
         />
       </div>
-      <button type="submit" className="font-bold text-[#0095F6]">
+      <button
+        type="submit"
+        className="font-bold text-[#0095F6] disabled:opacity-25"
+        disabled={!value}
+      >
         Post
       </button>
     </form>

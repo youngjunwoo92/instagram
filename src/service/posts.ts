@@ -84,6 +84,30 @@ export async function dislikePost(postId: string, userId: string) {
     .commit();
 }
 
+export async function addComment(
+  postId: string,
+  userId: string,
+  comment: string,
+) {
+  return client
+    .patch(postId) //
+    .setIfMissing({ comments: [] })
+    .append('comments', [
+      {
+        comment,
+        author: { _ref: userId, _type: 'reference' },
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function deleteComment(postId: string, userId: string) {
+  return client
+    .patch(postId)
+    .unset([`comments[_ref=="${userId}"]`])
+    .commit();
+}
+
 function mapPosts(posts: SimplePost[]) {
   return posts.map((post: SimplePost) => ({
     ...post,

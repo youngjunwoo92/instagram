@@ -1,16 +1,15 @@
 'use client';
 import Link from 'next/link';
-import useSWR from 'swr';
 
 import FollowingFallback from './ui/FollowingFallback';
 import ScrollableBar from './ui/ScrollableBar';
 import Avatar from './ui/Avatar';
 
-import { HomeUser } from '@/model/user';
+import useMe from '@/hooks/me';
 
 export default function FollowingBar() {
-  const { data, isLoading } = useSWR<HomeUser>('/api/me');
-  const users = data?.following;
+  const { user, isLoading } = useMe();
+  const users = user?.following;
 
   if (isLoading) {
     return (

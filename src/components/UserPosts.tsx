@@ -67,6 +67,7 @@ export default function UserPosts({ user: { username } }: Props) {
             <PostThumbnail
               key={post.id}
               post={post}
+              isMyProfile={isMyProfile}
               onClick={handleClick}
               priority={index < 6}
             />
