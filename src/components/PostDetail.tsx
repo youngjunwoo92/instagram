@@ -8,6 +8,7 @@ import PostHeader from './PostHeader';
 import ActionBar from './ActionBar';
 
 import { FullPost, SimplePost } from '@/model/post';
+import usePosts from '@/hooks/posts';
 
 type Props = {
   post: SimplePost;
@@ -16,8 +17,13 @@ type Props = {
 export default function PostDetail({ post }: Props) {
   const { id, userImage, username, image } = post;
   const { data } = useSWR<FullPost>(`/api/posts/${id}`);
+  const { postComment } = usePosts();
 
   const comments = data?.comments ?? [];
+
+  const handleSubmitComment = (comment: string) => {
+    postComment(post, comment);
+  };
 
   return (
     <article className="flex flex-col md:flex-row w-full h-full">
@@ -36,7 +42,7 @@ export default function PostDetail({ post }: Props) {
         <CommentList comments={comments} author={username} />
         <div>
           <ActionBar post={post} />
-          <CommentForm />
+          <CommentForm onSubmit={handleSubmitComment} />
         </div>
       </div>
     </article>

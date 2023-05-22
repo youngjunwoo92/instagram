@@ -1,5 +1,3 @@
-'use client';
-
 type Props = {
   children: React.ReactElement;
   onClick?: (e: React.MouseEvent) => void;

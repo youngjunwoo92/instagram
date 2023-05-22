@@ -1,29 +1,25 @@
-'use client';
-import React, { useCallback, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 
-import IconButton from './IconButton';
 import EmojiIcon from './ui/icons/EmojiIcon';
+import IconButton from './IconButton';
 
 type Props = {
   border?: boolean;
+  onSubmit: (comment: string) => void;
 };
 
-export default function CommentForm({ border }: Props) {
+export default function CommentForm({ border, onSubmit }: Props) {
   const [value, setValue] = useState<string>('');
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value);
-    },
-    [],
-  );
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
 
-  const handleSubmit = useCallback(
-    (e: React.SyntheticEvent) => {
-      e.preventDefault();
-    },
-    [value],
-  );
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    onSubmit(value);
+    setValue('');
+  };
 
   return (
     <form
@@ -36,8 +32,8 @@ export default function CommentForm({ border }: Props) {
         <IconButton>
           <EmojiIcon />
         </IconButton>
-        <textarea
-          rows={1}
+        <input
+          type="text"
           value={value}
           onChange={handleChange}
           placeholder="Add a comment..."
@@ -46,7 +42,7 @@ export default function CommentForm({ border }: Props) {
       </div>
       <button
         type="submit"
-        className="font-bold text-[#0095F6] disabled:opacity-25"
+        className="font-bold text-[#0095F6] disabled:opacity-[40%]"
         disabled={!value}
       >
         Post

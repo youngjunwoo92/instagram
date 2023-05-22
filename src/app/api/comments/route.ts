@@ -8,11 +8,15 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   const user = session?.user;
 
+  console.log({ user });
+
   if (!user) {
     return new Response('Authentication Error', { status: 401 });
   }
 
   const { id, comment } = await req.json();
+
+  console.log({ id, comment });
 
   if (!id || !comment) {
     return new Response('Bad Request', { status: 400 });
