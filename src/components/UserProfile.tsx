@@ -1,6 +1,7 @@
-import { ProfileUser } from '@/model/user';
 import FollowButton from './FollowButton';
 import Avatar from './ui/Avatar';
+
+import { ProfileUser } from '@/model/user';
 
 type Props = {
   user: ProfileUser;
