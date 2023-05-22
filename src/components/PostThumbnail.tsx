@@ -18,7 +18,6 @@ export default function PostThumbnail({
   onClick,
   isMyProfile,
 }: Props) {
-  console.log({ likes });
   return (
     <div
       className="relative aspect-square cursor-pointer"

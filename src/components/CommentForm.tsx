@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import EmojiIcon from './ui/icons/EmojiIcon';
 import IconButton from './IconButton';

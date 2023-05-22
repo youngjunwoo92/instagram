@@ -3,14 +3,13 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import ModalPortal from './ModalPortal';
-import CommentForm from './CommentForm';
 import PostHeader from './PostHeader';
 import PostDetail from './PostDetail';
 import PostModal from './PostModal';
 import ActionBar from './ActionBar';
 
+import { Comment, SimplePost } from '@/model/post';
 import { parseDate } from '@/util/parseDate';
-import { SimplePost } from '@/model/post';
 import usePosts from '@/hooks/posts';
 
 type Props = {
@@ -24,7 +23,7 @@ export default function Post({ post, priority = false }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const { postComment } = usePosts();
 
-  const handleSubmitComment = (comment: string) => {
+  const handleSubmitComment = (comment: Comment) => {
     postComment(post, comment);
   };
 
@@ -40,7 +39,7 @@ export default function Post({ post, priority = false }: Props) {
         className="block aspect-square w-full h-auto object-contain bg-neutral-100 cursor-pointer"
         onClick={() => setIsOpen(true)}
       />
-      <ActionBar post={post}>
+      <ActionBar post={post} onComment={handleSubmitComment}>
         <p className="inline font-bold">
           <span>{username}</span>
           <span className="ml-2">{text}</span>
@@ -57,7 +56,6 @@ export default function Post({ post, priority = false }: Props) {
           </button>
         )}
       </ActionBar>
-      <CommentForm border onSubmit={handleSubmitComment} />
       {isOpen && (
         <ModalPortal>
           <PostModal onClose={() => setIsOpen(false)}>

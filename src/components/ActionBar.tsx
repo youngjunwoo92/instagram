@@ -1,24 +1,24 @@
-'use client';
 import BookmarkActiveIcon from './ui/icons/BookmarkActiveIcon';
 import HeartActiveIcon from './ui/icons/HeartActiveIcon';
 import BookmarkIcon from './ui/icons/BookmarkIcon';
 import CommentIcon from './ui/icons/CommentIcon';
 import HeartIcon from './ui/icons/HeartIcon';
 import ToggleButton from './ui/ToggleButton';
+import CommentForm from './CommentForm';
 import IconButton from './IconButton';
 
-import { parseDate } from '@/util/parseDate';
-import { SimplePost } from '@/model/post';
+import { Comment, SimplePost } from '@/model/post';
 import usePosts from '@/hooks/posts';
 import useMe from '@/hooks/me';
 
 type Props = {
   post: SimplePost;
   children?: React.ReactNode;
+  onComment: (comment: Comment) => void;
 };
 
-export default function ActionBar({ post, children }: Props) {
-  const { likes, username, createdAt, text } = post;
+export default function ActionBar({ children, post, onComment }: Props) {
+  const { likes } = post;
 
   const { user, setBookmark } = useMe();
   const { setLike } = usePosts();
@@ -32,6 +32,15 @@ export default function ActionBar({ post, children }: Props) {
 
   const handleBookmark = (bookmark: boolean) => {
     user && setBookmark(post.id, bookmark);
+  };
+
+  const handleSubmitComment = (comment: string) => {
+    user &&
+      onComment({
+        comment,
+        username: user.username,
+        image: user.image,
+      });
   };
 
   return (
@@ -63,6 +72,7 @@ export default function ActionBar({ post, children }: Props) {
         )}
         {children}
       </div>
+      <CommentForm onSubmit={handleSubmitComment} />
     </>
   );
 }

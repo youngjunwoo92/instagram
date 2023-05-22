@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 
-import { SimplePost } from '@/model/post';
+import { Comment, SimplePost } from '@/model/post';
+import { useCallback } from 'react';
 
 async function updateLike(id: string, like: boolean) {
   return fetch('/api/likes', {
@@ -24,43 +25,49 @@ export default function usePosts() {
     error,
   } = useSWR<SimplePost[]>('/api/posts');
 
-  const setLike = (post: SimplePost, username: string, like: boolean) => {
-    const newPosts = posts?.map((p) =>
-      p.id === post.id
-        ? {
-            ...post,
-            likes: like
-              ? [...post.likes, username]
-              : post.likes.filter((item) => item !== username),
-          }
-        : p,
-    );
+  const setLike = useCallback(
+    (post: SimplePost, username: string, like: boolean) => {
+      const newPosts = posts?.map((p) =>
+        p.id === post.id
+          ? {
+              ...post,
+              likes: like
+                ? [...post.likes, username]
+                : post.likes.filter((item) => item !== username),
+            }
+          : p,
+      );
 
-    return mutate(updateLike(post.id, like), {
-      optimisticData: newPosts,
-      rollbackOnError: true,
-      populateCache: false,
-      revalidate: false,
-    });
-  };
+      return mutate(updateLike(post.id, like), {
+        optimisticData: newPosts,
+        rollbackOnError: true,
+        populateCache: false,
+        revalidate: false,
+      });
+    },
+    [posts, mutate],
+  );
 
-  const postComment = (post: SimplePost, comment: string) => {
-    const newPosts = posts?.map((p) =>
-      p.id === post.id
-        ? {
-            ...post,
-            comments: post.comments + 1,
-          }
-        : p,
-    );
+  const postComment = useCallback(
+    (post: SimplePost, comment: Comment) => {
+      const newPosts = posts?.map((p) =>
+        p.id === post.id
+          ? {
+              ...post,
+              comments: post.comments + 1,
+            }
+          : p,
+      );
 
-    return mutate(addComment(post.id, comment), {
-      optimisticData: newPosts,
-      rollbackOnError: true,
-      populateCache: false,
-      revalidate: false,
-    });
-  };
+      return mutate(addComment(post.id, comment.comment), {
+        optimisticData: newPosts,
+        rollbackOnError: true,
+        populateCache: false,
+        revalidate: false,
+      });
+    },
+    [posts, mutate],
+  );
 
   return { posts, isLoading, error, setLike, postComment };
 }

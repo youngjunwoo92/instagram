@@ -1,14 +1,12 @@
 'use client';
 import Image from 'next/image';
-import useSWR from 'swr';
 
-import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import PostHeader from './PostHeader';
 import ActionBar from './ActionBar';
 
-import { FullPost, SimplePost } from '@/model/post';
-import usePosts from '@/hooks/posts';
+import { Comment, SimplePost } from '@/model/post';
+import usePost from '@/hooks/post';
 
 type Props = {
   post: SimplePost;
@@ -16,13 +14,13 @@ type Props = {
 
 export default function PostDetail({ post }: Props) {
   const { id, userImage, username, image } = post;
-  const { data } = useSWR<FullPost>(`/api/posts/${id}`);
-  const { postComment } = usePosts();
+
+  const { post: data, postComment } = usePost(id);
 
   const comments = data?.comments ?? [];
 
-  const handleSubmitComment = (comment: string) => {
-    postComment(post, comment);
+  const handlePostComment = (comment: Comment) => {
+    postComment(comment);
   };
 
   return (
@@ -34,15 +32,14 @@ export default function PostDetail({ post }: Props) {
           src={image}
           alt="post"
           sizes="650px"
-          className="object-contain bg-neutral-100"
+          className="object-contain bg-neutral-100 aspect-[9/16]"
         />
       </div>
       <div className="w-full basis-2/5 flex flex-col">
         <PostHeader username={username} avatar={userImage} />
         <CommentList comments={comments} author={username} />
         <div>
-          <ActionBar post={post} />
-          <CommentForm onSubmit={handleSubmitComment} />
+          <ActionBar post={post} onComment={handlePostComment} />
         </div>
       </div>
     </article>

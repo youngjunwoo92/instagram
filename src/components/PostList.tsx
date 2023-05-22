@@ -7,8 +7,6 @@ import usePosts from '@/hooks/posts';
 export default function PostList() {
   const { posts, isLoading } = usePosts();
 
-  console.log({ posts });
-
   return (
     <section className="flex-grow">
       <div className="flex flex-col gap-4">
