@@ -15,16 +15,22 @@ type Props = {
   post: SimplePost;
   children?: React.ReactNode;
   onComment: (comment: Comment) => void;
+  cacheKey?: string | undefined;
 };
 
-export default function ActionBar({ children, post, onComment }: Props) {
+export default function ActionBar({
+  children,
+  post,
+  cacheKey,
+  onComment,
+}: Props) {
   const { likes } = post;
 
   const { user, setBookmark } = useMe();
-  const { setLike } = usePosts();
+  const { setLike } = usePosts(cacheKey);
 
-  const liked = user ? likes.includes(user.username) : false;
   const bookmarked = user ? user.bookmarks.includes(post.id) : false;
+  const liked = user ? likes.includes(user.username) : false;
 
   const handleLike = (like: boolean) => {
     user && setLike(post, user.username, like);

@@ -3,11 +3,11 @@ import { useCallback, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
 import useSWR from 'swr';
 
-import { SearchUser } from '@/model/user';
 import CloseIcon from './ui/icons/CloseIcon';
 import UserListItem from './UserListItem';
 
 import useDebounce from '@/hooks/useDebounce';
+import { SearchUser } from '@/model/user';
 
 export default function UserSearch() {
   const [keyword, setKeyword] = useState('');

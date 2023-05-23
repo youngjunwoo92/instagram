@@ -5,7 +5,7 @@ type Props = {
   onClose: () => void;
 };
 
-export default function PostModal({ onClose, children }: Props) {
+export default function UploadModal({ onClose, children }: Props) {
   return (
     <section
       className="fixed top-0 left-0 flex flex-col justify-center items-center w-full h-full z-50 bg-neutral-900/70"
@@ -15,10 +15,15 @@ export default function PostModal({ onClose, children }: Props) {
         }
       }}
     >
-      <button className="fixed top-0 right-0 p-8 text-white" onClick={onClose}>
-        <CloseIcon />
+      <button
+        className="fixed top-0 right-0 transform -translate-x-[100%] translate-y-1/2"
+        onClick={onClose}
+      >
+        <CloseIcon color="#fff" />
       </button>
-      <div className="bg-white w-4/5 h-3/5 max-w-7xl">{children}</div>
+      <div className="bg-white w-4/5 max-w-xl min-h-[66.66%] rounded-lg">
+        {children}
+      </div>
     </section>
   );
 }

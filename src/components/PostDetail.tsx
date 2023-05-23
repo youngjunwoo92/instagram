@@ -10,9 +10,10 @@ import usePost from '@/hooks/post';
 
 type Props = {
   post: SimplePost;
+  cacheKey?: string;
 };
 
-export default function PostDetail({ post }: Props) {
+export default function PostDetail({ post, cacheKey }: Props) {
   const { id, userImage, username, image } = post;
 
   const { post: data, postComment } = usePost(id);
@@ -39,7 +40,11 @@ export default function PostDetail({ post }: Props) {
         <PostHeader username={username} avatar={userImage} />
         <CommentList comments={comments} author={username} />
         <div>
-          <ActionBar post={post} onComment={handlePostComment} />
+          <ActionBar
+            post={post}
+            onComment={handlePostComment}
+            cacheKey={cacheKey}
+          />
         </div>
       </div>
     </article>

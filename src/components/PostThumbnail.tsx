@@ -9,7 +9,7 @@ type Props = {
   post: SimplePost;
   onClick: (id: string) => void;
   priority?: boolean;
-  isMyProfile: boolean;
+  isMyProfile?: boolean;
 };
 
 export default function PostThumbnail({

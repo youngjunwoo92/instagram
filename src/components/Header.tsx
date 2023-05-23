@@ -1,27 +1,25 @@
 'use client';
-import React from 'react';
-
+import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
-import UploadActiveIcon from './ui/icons/UploadActiveIcon';
 import SearchActiveIcon from './ui/icons/SearchActiveIcon';
 import HomeActiveIcon from './ui/icons/HomeActiveIcon';
 import GradientButton from './ui/GradientButton';
 import SearchIcon from './ui/icons/SearchIcon';
 import UploadIcon from './ui/icons/UploadIcon';
 import HomeIcon from './ui/icons/HomeIcon';
+import ModalPortal from './ModalPortal';
+import UploadModal from './UploadModal';
 import Avatar from './ui/Avatar';
-
-const menus = [
-  { href: '/', icon: <HomeIcon />, activeIcon: <HomeActiveIcon /> },
-  { href: '/search', icon: <SearchIcon />, activeIcon: <SearchActiveIcon /> },
-  { href: '/upload', icon: <UploadIcon />, activeIcon: <UploadActiveIcon /> },
-];
+import Upload from './Upload';
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   const pathname = usePathname();
+
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -35,13 +33,25 @@ export default function Header() {
         </div>
         <nav>
           <ul className="flex items-center gap-4">
-            {menus.map((menu, index) => (
-              <li key={index}>
-                <Link href={menu.href}>
-                  {menu.href === pathname ? menu.activeIcon : menu.icon}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link href="/">
+                {pathname === '/' ? <HomeActiveIcon /> : <HomeIcon />}
+              </Link>
+            </li>
+            <li>
+              <Link href="/search">
+                {pathname === '/' ? <SearchActiveIcon /> : <SearchIcon />}
+              </Link>
+            </li>
+            <li>
+              <button
+                className="flex justify-center items-center"
+                onClick={() => setIsOpen(true)}
+              >
+                <UploadIcon />
+              </button>
+            </li>
+
             {user && (
               <li>
                 <Link href={`/user/${user.username}`}>
@@ -49,16 +59,23 @@ export default function Header() {
                 </Link>
               </li>
             )}
-            <li>
+            {/* <li>
               <GradientButton
                 text={session ? 'Sign Out' : 'Sign In'}
                 onClick={session ? signOut : signIn}
                 size="md"
               />
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>
+      {isOpen && (
+        <ModalPortal>
+          <UploadModal onClose={() => setIsOpen(false)}>
+            <Upload />
+          </UploadModal>
+        </ModalPortal>
+      )}
     </header>
   );
 }
