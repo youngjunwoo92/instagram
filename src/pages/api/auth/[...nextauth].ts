@@ -59,7 +59,7 @@ export const authOptions: NextAuthOptions = {
     signIn: '/auth/signin',
     error: '/auth/error',
   },
-  secret: 'instagram-secret',
+  secret: process.env.NEXT_AUTH,
 };
 
 export default NextAuth(authOptions);

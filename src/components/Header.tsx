@@ -59,13 +59,13 @@ export default function Header() {
                 </Link>
               </li>
             )}
-            {/* <li>
+            <li>
               <GradientButton
                 text={session ? 'Sign Out' : 'Sign In'}
                 onClick={session ? signOut : signIn}
                 size="md"
               />
-            </li> */}
+            </li>
           </ul>
         </nav>
       </div>
