@@ -20,7 +20,7 @@ export default async function UserPage({ params: { username } }: Props) {
   }
 
   return (
-    <section className="max-w-3xl w-full flex flex-col px-2 pt-6">
+    <section className="max-w-3xl w-full flex flex-col px-2 pt-6 mx-auto">
       <UserProfile user={user} />
       <UserPosts user={user} />
     </section>

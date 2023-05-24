@@ -40,8 +40,8 @@ export default function Post({ post, priority = false }: Props) {
         onClick={() => setIsOpen(true)}
       />
       <ActionBar post={post} onComment={handleSubmitComment}>
-        <p className="inline font-bold">
-          <span>{username}</span>
+        <p className="inline">
+          <span className="font-bold">{username}</span>
           <span className="ml-2">{text}</span>
         </p>
         <p className="text-[10px] text-neutral-500 uppercase">

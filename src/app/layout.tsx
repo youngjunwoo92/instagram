@@ -1,6 +1,7 @@
 import { Open_Sans } from 'next/font/google';
 
 import SWRConfigContext from '@/context/SWRConfigContext';
+import LayoutProvider from '@/context/LayoutProvider';
 import AuthContext from '@/context/AuthContext';
 import Header from '@/components/Header';
 
@@ -25,12 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={openSans.className}>
       <body className="relative">
-        <AuthContext>
-          <Header />
-          <main className="w-full  flex justify-center bg-neutral-50 min-h-full">
-            <SWRConfigContext>{children}</SWRConfigContext>
-          </main>
-        </AuthContext>
+        <LayoutProvider>{children}</LayoutProvider>
         <div id="portal" />
       </body>
     </html>

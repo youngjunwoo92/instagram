@@ -1,7 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import SearchActiveIcon from './ui/icons/SearchActiveIcon';
@@ -14,14 +14,30 @@ import ModalPortal from './ModalPortal';
 import UploadModal from './UploadModal';
 import Avatar from './ui/Avatar';
 import Upload from './Upload';
+import Menu from './ui/Menu';
+
+import AccountIcon from './ui/icons/AccountIcon';
+import LogoutIcon from './ui/icons/LogoutIcon';
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const anchorElement = useRef(null);
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const { data: session } = useSession();
   const user = session?.user;
+
+  const menuItems = [
+    {
+      label: 'Profile',
+      icon: <AccountIcon />,
+      onClick: user ? () => router.push(`/user/${user.username}`) : () => {},
+    },
+    { label: 'Logout', icon: <LogoutIcon />, onClick: () => signOut() },
+  ];
 
   return (
     <header className="sticky bg-white top-0 h-20 shadow-md z-10">
@@ -53,19 +69,23 @@ export default function Header() {
             </li>
 
             {user && (
-              <li>
-                <Link href={`/user/${user.username}`}>
-                  <Avatar image={user.image} highlight={true} />
-                </Link>
-              </li>
+              <>
+                <li className="relative">
+                  <button
+                    className="flex justify-center items-center"
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  >
+                    <Avatar image={user.image} highlight={true} />
+                  </button>
+                  {isMenuOpen && (
+                    <Menu
+                      onClose={() => setIsMenuOpen(false)}
+                      menuItems={menuItems}
+                    />
+                  )}
+                </li>
+              </>
             )}
-            <li>
-              <GradientButton
-                text={session ? 'Sign Out' : 'Sign In'}
-                onClick={session ? signOut : signIn}
-                size="md"
-              />
-            </li>
           </ul>
         </nav>
       </div>

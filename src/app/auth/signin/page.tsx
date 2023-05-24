@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 import Signin from '@/components/Signin';
+import Header from '@/components/Header';
 
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Metadata } from 'next';
@@ -22,8 +23,8 @@ export default async function SigninPage() {
   const providers = (await getProviders()) ?? {};
 
   return (
-    <section>
-      <div className="max-w-lg w-full mx-auto mt-5">
+    <section className="fixed inset-0">
+      <div className="relative w-full h-full">
         <Signin providers={providers} />
       </div>
     </section>

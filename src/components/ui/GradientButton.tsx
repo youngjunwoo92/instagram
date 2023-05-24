@@ -29,7 +29,7 @@ export default function GradientButton({
   return (
     <button
       className={`font-bold text-white rounded-md bg-gradient-to-bl from-fuchsia-600 via-rose-500 to-amber-300 hover:opacity-90 transition-opacity ${style} ${
-        fullWidth && 'w-full py-4 text-lg'
+        fullWidth && 'w-full px-4 py-2 text-lg'
       }`}
       onClick={onClick}
     >
