@@ -1,12 +1,11 @@
 'use client';
-import { useState, useRef } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useState } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import SearchActiveIcon from './ui/icons/SearchActiveIcon';
 import HomeActiveIcon from './ui/icons/HomeActiveIcon';
-import GradientButton from './ui/GradientButton';
 import SearchIcon from './ui/icons/SearchIcon';
 import UploadIcon from './ui/icons/UploadIcon';
 import HomeIcon from './ui/icons/HomeIcon';
@@ -22,7 +21,6 @@ import LogoutIcon from './ui/icons/LogoutIcon';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const anchorElement = useRef(null);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -92,7 +90,7 @@ export default function Header() {
       {isOpen && (
         <ModalPortal>
           <UploadModal onClose={() => setIsOpen(false)}>
-            <Upload />
+            <Upload onClose={() => setIsOpen(false)} />
           </UploadModal>
         </ModalPortal>
       )}

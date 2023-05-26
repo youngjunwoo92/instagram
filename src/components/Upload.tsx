@@ -6,7 +6,9 @@ import Image from 'next/image';
 
 import CloudIcon from './ui/icons/CloudIcon';
 
-export default function Upload() {
+type Props = { onClose: () => void };
+
+export default function Upload({ onClose }: Props) {
   const [dragging, setDragging] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
@@ -66,6 +68,7 @@ export default function Upload() {
       .catch((error) => setError(error.toString()))
       .finally(() => {
         setLoading(false);
+        onClose();
       });
   };
 
