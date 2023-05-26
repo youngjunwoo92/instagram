@@ -3,7 +3,7 @@ export type AuthUser = {
   name: string;
   username: string;
   email: string;
-  image?: string | null;
+  image?: string | null | undefined;
 };
 
 export type SimpleUser = Pick<AuthUser, 'username' | 'image'>;

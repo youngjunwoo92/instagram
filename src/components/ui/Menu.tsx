@@ -1,5 +1,4 @@
-'use client';
-import React, { useState } from 'react';
+import React, { LegacyRef } from 'react';
 
 import { useClickOutside } from '@/hooks/useClickOutside';
 
@@ -35,6 +34,7 @@ function DropdownItem({
 
 export default function Menu({ menuItems, onClose }: Props) {
   const ref = useClickOutside(onClose);
+
   return (
     <div ref={ref} className="menu">
       {menuItems.map(({ icon, onClick, label }, index) => (

@@ -1,10 +1,12 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, LegacyRef } from 'react';
+
+type Ref = LegacyRef<HTMLDivElement> | undefined;
 
 export function useClickOutside(callback: () => void) {
-  const ref = useRef();
+  const ref = useRef() as Ref;
 
   useEffect(() => {
-    const handleClick = (event) => {
+    const handleClick = () => {
       callback();
     };
 
