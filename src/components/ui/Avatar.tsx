@@ -1,7 +1,9 @@
+import AccountIcon from './icons/AccountIcon';
+
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 type Props = {
-  image?: string;
+  image?: string | null;
   width?: Number;
   height?: Number;
   size?: AvatarSize;
@@ -13,16 +15,20 @@ export default function Avatar({
   size = 'md',
   highlight = false,
 }: Props) {
-  return (
+  return image ? (
     <div className={getContainerStyle(size, highlight)}>
       <img
         alt="avatar"
-        src={image ?? undefined}
+        src={image}
         className={`rounded-full object-cover w-full h-full ${
           highlight ? 'p-[2px] bg-[#fff]' : ''
         }`}
       />
     </div>
+  ) : (
+    <AccountIcon
+      className={`${getContainerStyle(size, false)} text-neutral-300`}
+    />
   );
 }
 

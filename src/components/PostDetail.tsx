@@ -26,17 +26,17 @@ export default function PostDetail({ post, cacheKey }: Props) {
 
   return (
     <article className="flex flex-col md:flex-row w-full h-full">
-      <div className="relative basis-3/5 flex items-center justify-center">
+      <div className="h-1/2 md:h-full relative max-width-[320px] bg-neutral-200 w-full align-center">
         <Image
           fill
           priority
           src={image}
           alt="post"
           sizes="650px"
-          className="object-contain bg-neutral-100 aspect-[9/16]"
+          className="object-contain aspect-square"
         />
       </div>
-      <div className="w-full basis-2/5 flex flex-col">
+      <div className="w-full flex flex-col">
         <PostHeader username={username} avatar={userImage} />
         <CommentList comments={comments} author={username} />
         <div>

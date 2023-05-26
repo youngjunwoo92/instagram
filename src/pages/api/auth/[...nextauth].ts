@@ -1,5 +1,5 @@
-import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 
 import { addUser } from '@/service/user';
 
@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user: { id, email, name, image } }) {
+    async signIn({ user: { id, email, name } }) {
       if (!email) {
         return false;
       }
@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
       addUser({
         id,
         name: name || '',
-        image,
+        image: null,
         email,
         username: email.split('@')[0],
       });

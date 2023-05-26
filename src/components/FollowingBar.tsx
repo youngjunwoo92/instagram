@@ -27,7 +27,7 @@ export default function FollowingBar() {
             <Link
               key={user.username}
               href={`/user/${user.username}`}
-              className="flex flex-col text-center justify-center items-center"
+              className="flex flex-col text-center justify-center items-center !w-[80px]"
             >
               <Avatar image={user.image} highlight={true} size="xl" />
               <p className="text-neutral-600">{user.username}</p>

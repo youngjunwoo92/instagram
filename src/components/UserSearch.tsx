@@ -15,7 +15,7 @@ export default function UserSearch() {
   const debouncedKeyword = useDebounce(keyword, 500);
 
   const { data: users, isLoading } = useSWR<SearchUser[]>(
-    debouncedKeyword.length > 1 ? `/api/search/${debouncedKeyword}` : null,
+    `/api/search/${debouncedKeyword}`,
   );
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

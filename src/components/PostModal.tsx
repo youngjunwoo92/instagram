@@ -15,10 +15,15 @@ export default function PostModal({ onClose, children }: Props) {
         }
       }}
     >
-      <button className="fixed top-0 right-0 p-8 text-white" onClick={onClose}>
+      <button
+        className="fixed top-0 right-0 p-8 text-white z-10"
+        onClick={onClose}
+      >
         <CloseIcon />
       </button>
-      <div className="bg-white w-4/5 h-3/5 max-w-7xl">{children}</div>
+      <div className="w-full h-full bg-white md:w-4/5 md:h-3/5 max-w-7xl">
+        {children}
+      </div>
     </section>
   );
 }
